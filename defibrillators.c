@@ -34,31 +34,31 @@ int main()
 
     for (int i = 0; i < N; i++) {
         char DEFIB[257] = "";
-        scanf("%s", DEFIB); 
+        scanf(" %[^\n]", DEFIB); 
+ 
+        char *ptr_t = strchr(DEFIB, ';')+1;
+        //name of street
+        char *t=strchr(ptr_t,';');
+       
+        strncpy(list[i].name, ptr_t, t-ptr_t);
 
-        char *ptr_t = strrchr(DEFIB, ';')+1;
+        //latitude
+        ptr_t=strrchr(DEFIB,';');
+        *ptr_t++='\0';  
         *(strchr(ptr_t, ','))='.';
-        //записываем долготу
         list[i].lat=atof(ptr_t);
+       
 
-        ptr_t=strrchr(ptr_t-1,';')+1;
+        //longtitude
+        ptr_t=strrchr(DEFIB, ';')+1;
         *(strchr(ptr_t, ','))='.';
-        //записываем широту
         list[i].lon=atof(ptr_t);
 
-        ptr_t+=2;
-        //записываем название улицы
-        ptr_t=strchr(DEFIB,';')+1;
-        
-        int num=0;
-        while(*ptr_t!=';'){
-            list[i].name[num++] = *ptr_t++;
-        }
 
         //Считаем расстояние до дефибриллятора
-        double x = list[i].lon-lon*cos((lon+list[i].lon)/2.);
+        double x = (list[i].lon-lon)*cos((lat+list[i].lat)/2.);
         double y = list[i].lat-lat;
-        double d = sqrt(x*x+y*y)*6371;
+        double d = sqrt(x*x+y*y)*6371.;
 
         dist[i] = d;
 
@@ -67,12 +67,12 @@ int main()
     // Write an answer using printf(). DON'T FORGET THE TRAILING \n
     // To debug: fprintf(stderr, "Debug messages...\n");
 
-    int max=0;
+    int min=0;
     for (int i = 0;i<N; i++ ){
-        dist[max]>dist[i]?(max=i):1;
+        dist[min]>dist[i]?(min=i):1;
     }
     
-    printf("%s", list[max].name);
+    printf("%s", list[min].name);
     free(dist);
     free(list);
     return 0;
