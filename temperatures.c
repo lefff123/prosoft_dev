@@ -30,7 +30,7 @@ int main()
 
     temp=nums;
     int tempnum=10000;
-    for (char i=0; i<n; i++){
+    for (int i=0; i<n; i++){
         if (abs(*(temp+i))<abs(tempnum))
             tempnum = *(temp+i);
         if (abs(*(temp+i))==abs(tempnum)){
