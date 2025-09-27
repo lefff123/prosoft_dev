@@ -76,7 +76,7 @@ int main()
 
 
     // For each of the Q filenames, display on a line the corresponding MIME type. If there is no corresponding type, then display UNKNOWN.
-    
+    free(mime);
 
     return 0;
 }
