@@ -13,7 +13,6 @@
 
 int main()
 {
-    setvbuf(stdout, NULL, _IOFBF, 8192);  // Буфер 8KB
     
     struct data_type{
         char type[12];
