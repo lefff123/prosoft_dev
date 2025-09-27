@@ -1,5 +1,5 @@
 //РЕШЕНИЕ НЕ ПРОШЛО ПОСЛЕДНИЙ ТЕСТ
-
+//out of time
 
 #include <stdlib.h>
 #include <stdio.h>
