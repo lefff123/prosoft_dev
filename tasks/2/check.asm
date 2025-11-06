@@ -14,6 +14,9 @@ section .text
     mov rdx, 12
     syscall
 
+    cmp rax, 0      ; устанавливает флаги на основе rax
+    jl bad 
+
 
     cmp rax, 12
     ;подготавливаемся к выводу отчета
