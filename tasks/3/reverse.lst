@@ -1,0 +1,68 @@
+     1                                  section .data
+     2 00000000 456E74657220796F75-         repeat1 db "Enter your string: ", 0
+     2 00000009 7220737472696E673A-
+     2 00000012 2000               
+     3 00000014 526576657273656420-         repeat2 db "Reversed string: ", 0
+     3 0000001D 737472696E673A2000 
+     4                                  
+     5                                  section .bss
+     6 00000000 <res 64h>                   reverse resb 100
+     7                                  
+     8                                  global _start
+     9                                  
+    10                                  section .text
+    11                                  _start:
+    12                                      ; вывод меню
+    13 00000000 B801000000                  mov rax, 1
+    14 00000005 BF01000000                  mov rdi, 1
+    15 0000000A 48BE-                       mov rsi, repeat1
+    15 0000000C [0000000000000000] 
+    16 00000014 BA12000000                  mov rdx, 18
+    17 00000019 0F05                        syscall
+    18                                  
+    19                                      ; чтение выбора
+    20 0000001B 48BF-                       mov rdi, reverse
+    20 0000001D [0000000000000000] 
+    21                                  
+    22                                      read:
+    23 00000025 B800000000                  mov rax, 0
+    24 0000002A 4889FE                      mov rsi, rdi
+    25 0000002D BA01000000                  mov rdx, 1
+    26 00000032 0F05                        syscall
+    27                                  
+    28 00000034 803F0A                      cmp byte[rdi], 10
+    29 00000037 7412                        je end_read
+    30                                  
+    31 00000039 48FFC7                      inc rdi
+    32 0000003C 4889F8                      mov rax, rdi
+    33 0000003F 482D[00000000]              sub rax, reverse
+    34 00000045 4883F863                    cmp rax, 99
+    35 00000049 7CDA                        jl read
+    36                                  
+    37                                  end_read:
+    38 0000004B C60700                      mov byte[rdi], 0
+    39                                      
+    40                                      ; Вывод сообщения "Reversed string: "
+    41 0000004E B801000000                  mov rax, 1
+    42 00000053 BF01000000                  mov rdi, 1
+    43 00000058 48BE-                       mov rsi, repeat2
+    43 0000005A [1400000000000000] 
+    44 00000062 BA11000000                  mov rdx, 17
+    45 00000067 0F05                        syscall
+    46                                  
+    47 00000069 48FFCF                      dec rdi
+    48                                  
+    49                                      output:
+    50 0000006C B801000000                  mov rax, 1
+    51 00000071 BF01000000                  mov rdi, 1
+    52 00000076 4889FE                      mov rsi, rdi
+    53 00000079 BA01000000                  mov rdx, 1
+    54 0000007E 0F05                        syscall
+    55 00000080 48FFCF                      dec rdi
+    56                                  
+    57 00000083 4881FF[00000000]            cmp rdi, reverse
+    58 0000008A 7DE0                        jge output
+    59                                  
+    60 0000008C B83C000000                  mov rax, 60
+    61 00000091 BF00000000                  mov rdi, 0
+    62 00000096 0F05                        syscall
